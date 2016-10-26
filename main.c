@@ -13,15 +13,16 @@ int main(void)
         perror("fork error");
         exit(1);
     }
-
-    if(pid == 0)
+    else if(pid == 0)
     {
-        printf("child process: pid = %d, ppid = %d\n", getpid(), getppid());
-        sleep(5);
-        printf("child process: pid = %d, ppid = %d\n", getpid(), getppid());
+        printf("child process\n");
+        exit(1);
     }
-    else
-        printf("father process: pid = %d\n", getpid());
+
+    printf("father process");
+    sleep(4);
+
+    system("ps -o pid,ppid,state,tty,command");
 
     return 0;
 }
