@@ -3,7 +3,7 @@
 #include <errno.h>
 #include <unistd.h>
 
-int main(void)
+void test1()
 {
     pid_t pid;
     pid = fork();
@@ -23,6 +23,39 @@ int main(void)
     sleep(4);
 
     system("ps -o pid,ppid,state,tty,command");
+}
+
+void test2()
+{
+    pid_t pid;
+
+    while(1)
+    {
+        pid = fork();
+        if(pid < 0)
+        {
+            perror("fork error\n");
+            exit(1);
+        }
+        else if(pid == 0)
+        {
+            printf("child process\n");
+            exit(1);
+        }
+        else
+        {
+            sleep(3);
+            system("ps -o pid,ppid,state,tty,command");
+            continue;
+        }
+    }
+
+    return 0;
+}
+
+int main(void)
+{
+    test2();
 
     return 0;
 }
